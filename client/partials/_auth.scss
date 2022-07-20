@@ -1,35 +1,36 @@
-.signup-container {
+.auth-container {
     max-width: 80%;
     margin: 0 auto;
-    & .signup-content {
+    & .auth-content {
       display: flex;
       justify-content: space-between;
-      margin-top: 2rem;
-      &-left {
-        flex: 0 0 30rem;
+      width: 70%;
+      margin: 2rem auto;  
+      .left-wrapper {
+        flex: 1;
       }
-      &-right {
-        flex: 1 1 30rem;
+      .right-wrapper {
+        flex: 1;
       }
     }
   }
   
   form {
-    & .input {
+    .form-control {
       display: flex;
       flex-direction: column-reverse;
       position: relative;
       padding-top: 1.5rem;
-      & + .input {
+      & + .form-control {
         margin-top: 1.5rem;
       }
-      &-label {
+      .form-label {
         color: #52575b;
         position: absolute;
         top: 1.5rem;
         transition: 0.25s ease;
       }
-      &-field {
+      .form-input {
         border: 0;
         z-index: 1;
         background-color: transparent;
@@ -40,31 +41,31 @@
         &:valid {
           outline: 0;
           border-bottom-color: #89d4d5;
-          & + .input-label {
+          & + .form-label {
             color: $color-info;
             transform: translateY(-1.5rem);
           }
         }
       }
     }
-    & .action-button {
+    .action-btn {
       width: 100%;
       margin: 2rem 0 1rem 0;
       padding: 0.8rem;
       font-size: 1rem;
+      margin-top: 10px;
+      padding: 0.5rem;
     }
   }
   
   //for mobiles and tablets
   @media (max-width: 768px) {
-    .signup-container {
-      & .signup-content {
+    .auth-container {
+       .auth-content {
         flex-direction: column;
-        &-left {
-          flex: 0 0 0;
-        }
-        &-right {
-          flex: 0 0 0;
+        width: 100%;
+        .right-wrapper{
+          margin-top: 2rem;
         }
       }
     }

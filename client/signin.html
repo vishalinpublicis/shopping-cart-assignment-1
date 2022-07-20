@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description"
+            content="Get the best offers on food, groceries, beverages, personal care, and more at Sabka Bazaar store across India. Save more with Sabka Bazaar shopping." />
+        <meta name="keywords" content="home needs products, grocery store, fruits, bakery, online shopping" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <title>Sabka Bazaar</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+        />
+        <link rel="icon" type="image/png" href="./static/favicon/favicon.ico" />
+
+        <!-- font awesome icons -->
+        <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+        <!-- custom style -->
+        <link rel="stylesheet" href="./scss/styles.css">
+    </head>
+    <body>
+        
+        <!-- Header -->
+        <header class="app-header">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="app-logo">
+                        <a href="#" title="Sabka Bazaar">
+                            <img 
+                                srcset="./static/images/logo.png 190w,
+                                    ./static/images/logo_2x.png 380w "
+                                sizes="(max-width: 600px) 480px, 800px"
+                                src="./static/images/logo.png" alt="Sabka Bazaar Logo" />
+                        </a>
+                    </div>
+                    <!-- left nav items -->
+                    <div class="left-nav-item">
+                        <ul>
+                            <li>
+                                <a href="#">home</a>
+                            </li>
+                            <li>
+                                <a href="#">products</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                     <!-- left nav items -->
+                     <div class="right-nav-item">
+                        <ul>
+                            <li>
+                                <a href="#">signin</a>
+                            </li>
+                            <li>
+                                <a href="#">register</a>
+                            </li>
+                        </ul>
+                        <!-- cart item -->
+                        <div class="cart-item">
+                            <button class="add-cart-btn">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <div class="cart-text"><span class="card-items-count"> 0 </span>items</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>   
+        <!-- navbar end -->
+
+        <!-- main section -->
+        <!-- login form -->
+        <section class="auth-container container">
+            <div class="auth-content">
+                <div class="left-wrapper">
+                    <h2 class="main-title">Login</h2>
+                    <p class="sub-content">Get access to your Order, Wishlist and Recommedations</p>
+                </div>
+                <div class="right-wrapper">
+                    <form class="form">
+                        <div class="form-control">
+                            <input type="email" id="email" class="form-input" required />
+                            <label class="form-label" for="email">Email</label>
+                        </div>
+
+                        <div class="form-control">
+                            <input type="password" id="password" class="form-input" required />
+                            <label class="form-label" for="password">Password</label>
+                        </div>
+
+                        <div class="form-action">
+                            <button class="btn action-btn">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- footer -->
+
+        <footer class="footer">
+            <div class="container">
+                <p>Copywrite © 2011-2022 Sabka Bazaar Grocery Supplies Pvt. Ltd.</p>
+            </div>
+        </footer>
+        <script src="" async defer></script>
+    </body>
+</html>

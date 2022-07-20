@@ -68,3 +68,11 @@
         }
     }
 }
+
+.btn {
+  font: inherit;
+  border: none;
+  color: $color-white;
+  background: $color-primary;
+  cursor: pointer;
+}

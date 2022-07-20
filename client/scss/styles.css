@@ -35,6 +35,14 @@
   flex-wrap: wrap;
 }
 
+.btn {
+  font: inherit;
+  border: none;
+  color: #ffffff;
+  background: #d10157;
+  cursor: pointer;
+}
+
 .app-header .navbar {
   box-shadow: 0px 10px 12px -12px rgba(0, 0, 0, 0.3);
 }
@@ -476,7 +484,7 @@
   .prod-wrapper select {
     display: block;
     padding: 0.6rem;
-    background: #bf2957;
+    background: #d10157;
     color: #ffffff;
     font: inherit;
     font-size: 0.9rem;
@@ -594,7 +602,7 @@
   width: 24px;
   font-size: 1.4em;
   border-radius: 50%;
-  background: #bf2957;
+  background: #d10157;
   color: #ffffff;
   text-align: center;
   cursor: pointer;
@@ -640,38 +648,39 @@
     width: 80%;
   }
 }
-.signup-container {
+.auth-container {
   max-width: 80%;
   margin: 0 auto;
 }
-.signup-container .signup-content {
+.auth-container .auth-content {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  width: 70%;
+  margin: 2rem auto;
 }
-.signup-container .signup-content-left {
-  flex: 0 0 30rem;
+.auth-container .auth-content .left-wrapper {
+  flex: 1;
 }
-.signup-container .signup-content-right {
-  flex: 1 1 30rem;
+.auth-container .auth-content .right-wrapper {
+  flex: 1;
 }
 
-form .input {
+form .form-control {
   display: flex;
   flex-direction: column-reverse;
   position: relative;
   padding-top: 1.5rem;
 }
-form .input + .input {
+form .form-control + .form-control {
   margin-top: 1.5rem;
 }
-form .input-label {
+form .form-control .form-label {
   color: #52575b;
   position: absolute;
   top: 1.5rem;
   transition: 0.25s ease;
 }
-form .input-field {
+form .form-control .form-input {
   border: 0;
   z-index: 1;
   background-color: transparent;
@@ -679,30 +688,30 @@ form .input-field {
   font-size: 1.125rem;
   padding: 0.25rem 0;
 }
-form .input-field:focus, form .input-field:valid {
+form .form-control .form-input:focus, form .form-control .form-input:valid {
   outline: 0;
   border-bottom-color: #89d4d5;
 }
-form .input-field:focus + .input-label, form .input-field:valid + .input-label {
+form .form-control .form-input:focus + .form-label, form .form-control .form-input:valid + .form-label {
   color: #89d4d5;
   transform: translateY(-1.5rem);
 }
-form .action-button {
+form .action-btn {
   width: 100%;
   margin: 2rem 0 1rem 0;
   padding: 0.8rem;
   font-size: 1rem;
+  margin-top: 10px;
+  padding: 0.5rem;
 }
 
 @media (max-width: 768px) {
-  .signup-container .signup-content {
+  .auth-container .auth-content {
     flex-direction: column;
+    width: 100%;
   }
-  .signup-container .signup-content-left {
-    flex: 0 0 0;
-  }
-  .signup-container .signup-content-right {
-    flex: 0 0 0;
+  .auth-container .auth-content .right-wrapper {
+    margin-top: 2rem;
   }
 }
 .footer-container {
