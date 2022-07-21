@@ -5,14 +5,14 @@
     padding: 0.6rem;  
     flex: 1 0 20%;
 
-    #filterType{
+    #filterType, label{
       display: none;
     }
     #filterType:checked + ul {
         display: block;
     }
     
-    ul{ display: none;
+    ul{ 
       li{
         border-bottom: 1px solid #8d8d8d;
         a{
@@ -110,6 +110,7 @@
           }
         }
         ul{
+          display: none;
           li{
             a{
               color: white;
@@ -151,7 +152,7 @@
     .product-content {
       .product-cards {
         .product-card{
-            max-width: 100%;
+            max-width: 46%;
         }
       }
     }
