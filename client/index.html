@@ -122,8 +122,8 @@
 
         <!-- Product category -->
 
-        <section class="product-category container">
-            <div class="category-item">
+        <section class="product-category container" id="categoryContainer">
+            <!-- <div class="category-item">
                 <div class="product-img">
                     <img src="./static/images/category/fruits.png" alt="Fruits and Vegetables" />
                 </div>
@@ -176,7 +176,7 @@
                     <p class="product-description">Shop online for Baby Products, Diapers, Skin Care Products etc</p>
                     <button class="explore-btn">Explore baby</button>
                 </div>
-            </div>
+            </div> -->
         </section>
 
         <!-- footer -->
@@ -186,6 +186,22 @@
                 <p>Copywrite © 2011-2022 Sabka Bazaar Grocery Supplies Pvt. Ltd.</p>
             </div>
         </footer>
-        <script src="" async defer></script>
+
+        <!-- handelbar -->
+        <script type="text/x-handelbars-template" id="categoryTemplate">
+            {{#each this}}
+                <div class="category-item">
+                    <div class="product-img">
+                        <img src="{{imageUrl}}" alt="{{name}}" />
+                    </div>
+                    <div class="product-details">
+                        <h2 class="product-title">{{name}}</h2>
+                        <p class="product-description">{{description}}</p>
+                        <button class="explore-btn">Explore fruit-and-veg</button>
+                    </div>
+                </div>
+            {{/each}}
+        </script>
+        <script src="./dist/bundle.js"></script>
     </body>
 </html>
