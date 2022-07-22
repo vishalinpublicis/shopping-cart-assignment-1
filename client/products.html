@@ -44,10 +44,10 @@
                     <div class="left-nav-item">
                         <ul>
                             <li>
-                                <a href="#">home</a>
+                                <a href="index.html">home</a>
                             </li>
                             <li>
-                                <a href="#">products</a>
+                                <a href="products.html">products</a>
                             </li>
                         </ul>
                     </div>
@@ -56,10 +56,10 @@
                      <div class="right-nav-item">
                         <ul>
                             <li>
-                                <a href="#">signin</a>
+                                <a href="signin.html">signin</a>
                             </li>
                             <li>
-                                <a href="#">register</a>
+                                <a href="signup.html">register</a>
                             </li>
                         </ul>
                         <!-- cart item -->
@@ -99,8 +99,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="product-cards right-section">
-                    <div class="product-card">
+                <div class="product-cards right-section" id="productContainer">
+                    <!-- <div class="product-card">
                         <div class="product-title">Freshio Kiwi- Green, 3 pcs</div>
                         <div class="inner-card">
                             <div class="product-image">
@@ -205,7 +205,7 @@
                             </div>
     
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </section>
@@ -269,6 +269,33 @@
             </div>
         </div>
 
-        <script src="" async defer></script>
+
+        <!-- handelbar -->
+        <script type="text/x-handelbars-template" id="productTemplate">
+            {{#each this}}
+                <div class="product-card">
+                    <div class="product-title">{{name}}</div>
+                    <div class="inner-card">
+                        <div class="product-image">
+                            <img src="{{imageURL}}" alt="{{name}}" />
+                        </div>    
+
+                        <div class="product-body">
+                            <div class="product-detail">
+                                {{description}}
+                            </div>
+                            <div class="product-footer">
+                                <div class="product-price">MRP Rs. {{price}}</div>
+                                <button class="btn buy-btn">Buy Now</button>
+                                <button class="btn buy-btn-sm">Buy Now @ Rs. {{price}}</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {{/each}}
+        </script>
+
+        <script src="./dist/bundle.js" async defer></script>
     </body>
 </html>
