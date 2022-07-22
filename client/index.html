@@ -19,7 +19,7 @@
         <link rel="icon" type="image/png" href="./static/favicon/favicon.ico" />
 
         <!-- font awesome icons -->
-        <link rel="stylesheet" 
+        <link rel="stylesheet"  rel="preload"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
         <!-- custom style -->
@@ -32,12 +32,12 @@
             <nav class="navbar">
                 <div class="container">
                     <div class="app-logo">
-                        <a href="#" title="Sabka Bazaar">
+                        <a href="index.html" title="Sabka Bazaar">
                             <img 
                                 srcset="./static/images/logo.png 190w,
                                     ./static/images/logo_2x.png 380w "
                                 sizes="(max-width: 600px) 480px, 800px"
-                                src="./static/images/logo.png" alt="Sabka Bazaar Logo" />
+                                src="./static/images/logo.png" alt="Sabka Bazaar Logo" loading="lazy"/>
                         </a>
                     </div>
                     <!-- left nav items -->
@@ -64,7 +64,7 @@
                         </ul>
                         <!-- cart item -->
                         <div class="cart-item">
-                            <button class="add-cart-btn">
+                            <button class="add-cart-btn" title="Cart">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <div class="cart-text"><span class="card-items-count"> 0 </span>items</div>
                             </button>
@@ -192,7 +192,7 @@
             {{#each this}}
                 <div class="category-item">
                     <div class="product-img">
-                        <img src="{{imageUrl}}" alt="{{name}}" />
+                        <img src="{{imageUrl}}" alt="{{name}}" loading="lazy"/>
                     </div>
                     <div class="product-details">
                         <h2 class="product-title">{{name}}</h2>
@@ -202,6 +202,6 @@
                 </div>
             {{/each}}
         </script>
-        <script src="./dist/bundle.js"></script>
+        <script src="./dist/bundle.js" defer></script>
     </body>
 </html>

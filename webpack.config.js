@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: '/client/src/js/index.js',
-    mode: 'development',
+    mode: 'production',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, "client/dist")
@@ -28,7 +28,20 @@ module.exports = {
                     }
                 ]
             },
-            { test: /\.handlebars$/, loader: "handlebars-loader" }
+            { test: /\.handlebars$/, loader: "handlebars-loader" },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                  'file-loader',
+                  {
+                    loader: 'image-webpack-loader',
+                    options: {
+                      bypassOnDebug: true, // webpack@1.x
+                      disable: true, // webpack@2.x and newer
+                    },
+                  },
+                ],
+              }
         ]
     },
     resolve: {
