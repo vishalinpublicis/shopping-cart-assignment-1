@@ -286,8 +286,8 @@
                             </div>
                             <div class="product-footer">
                                 <div class="product-price">MRP Rs. {{price}}</div>
-                                <button class="btn buy-btn">Buy Now</button>
-                                <button class="btn buy-btn-sm">Buy Now @ Rs. {{price}}</button>
+                                <button class="btn buy-btn addToCart" data-id="{{id}}">Buy Now</button>
+                                <button class="btn buy-btn-sm addToCart" data-id="{{id}}">Buy Now @ Rs. {{price}}</button>
                             </div>
                         </div>
 
@@ -295,7 +295,7 @@
                 </div>
             {{/each}}
         </script>
-
         <script src="./dist/bundle.js" defer></script>
+
     </body>
 </html>

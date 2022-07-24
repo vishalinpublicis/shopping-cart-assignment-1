@@ -1,19 +1,29 @@
-const myRequest = new Request('src/json/products.json');
-const Handlebars = require("handlebars");
+// 'use strict';
+// // add to cart funct
+// let addToCart = document.querySelectorAll('.buy-btn');
+// console.log(addToCart);
 
-fetch(myRequest)
-  .then(response => response.json())
-  .then(data => {
-    createProductHtml(data);
-  })
-  .catch(console.error);
+// for(let i=0;i < addToCart.length;i++){
+//   console.log('haha');
+//   addToCart[i].addEventListener( 'click', () => {
+//     // console.log('huua');
+//     cartNumber();
+//   })
+// }
 
-//   create html for category function
-function createProductHtml(categoryData){
-    var template = document.getElementById('productTemplate').innerHTML;
-    var compiledTemplate = Handlebars.compile(template);
-    var ourGeneratedTemplate = compiledTemplate(categoryData);
 
-    var categoryContainer = document.getElementById('productContainer');
-    categoryContainer.innerHTML = ourGeneratedTemplate
-}
+
+// function cartNumber(){
+//   let productNumbers = localStorage.getItem('cartNumber');
+//   productNumbers = parseInt(productNumbers);
+
+//   if(productNumbers){
+//     localStorage.setItem('cartNumber', productNumbers + 1);
+//     document.querySelectorAll('.card-items-count').textContent = productNumbers + 1;
+
+//   } else{
+//     localStorage.setItem('cartNumber', 1);
+//     document.querySelectorAll('.card-items-count').textContent = 1;
+//   }
+// }
+
