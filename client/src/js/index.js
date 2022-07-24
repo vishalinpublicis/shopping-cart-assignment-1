@@ -56,9 +56,9 @@ function addTocartListener(productData){
     for(let i=0;i < addToCart.length;i++){
       addToCart[i].addEventListener( 'click', () => {
         let productId = addToCart[i].getAttribute('data-id');
-        console.log(productId);
-        console.log(productData[productId]);
-        cartNumber(productData[productId]);
+        let itemInProduct = productData.find(element => element.id == productId);
+        cartNumber(itemInProduct);
+        totalCartValue(itemInProduct.price)
       })
     }
 }
@@ -73,7 +73,7 @@ function onLoadCartData(){
 
 // add cart item in local storage and in cart
 function cartNumber(productData){
-  console.log(productData);
+  // console.log(productData);
   let productNumbers = localStorage.getItem('cartNumber');
   productNumbers = parseInt(productNumbers);
 
@@ -93,6 +93,54 @@ function cartNumber(productData){
 //calling onload cart func
 onLoadCartData();
 
-function setProductItems(){
+function setProductItems(productData){
+  let cartItem = localStorage.getItem('product');
+  cartItem = JSON.parse(cartItem);
+
+  localStorage.setItem('product', JSON.stringify(productData));
+
+}
+
+function getProductData() {
+ let data = localStorage.getItem('product')
+  console.log(data);
+}
+
+//open add to cart popup
+function openAddToCartPopup(){
+  let addToCartBtn = document.querySelector('.add-cart-btn');
+  let cartPopup = document.querySelector('#cartModal');
+  addToCartBtn.addEventListener('click', function(){
+    cartPopup.style.display = 'block'
+  })
+}
+//open cart popup listener
+openAddToCartPopup();
+
+// close popup
+function closePopup(){
+  let closeBtn = document.querySelector('#cartModal .close');
+  let cartPopup = document.querySelector('#cartModal');
+  closeBtn.addEventListener('click', function(){
+    cartPopup.style.display = 'none';
+  })
+}
+
+//close add to cart modal
+closePopup();
+
+
+// total product cost in cart popup
+function totalCartValue(price){
+  let cartTotalElement = document.querySelector('.cartTotalVal');
+  let cartCost = localStorage.getItem('totalCost');
+
+  if(cartCost != null){
+    localStorage.setItem('totalCost', parseInt(cartCost) + parseInt(price));
+    cartTotalElement.textContent = parseInt(cartCost) + parseInt(price);
+  } else {
+    localStorage.setItem('totalCost', parseInt(price));
+    cartTotalElement.textContent = parseInt(price);
+  }
 
 }
