@@ -164,10 +164,10 @@ function totalCartValue(price){
   let cartCost = localStorage.getItem('totalCost');
   if(cartCost != null){
     localStorage.setItem('totalCost', parseInt(cartCost) + parseInt(price));
-    cartTotalElement.textContent = 'Rs '+ parseInt(cartCost) + parseInt(price);
+    cartTotalElement.textContent = parseInt(cartCost) + parseInt(price);
   } else {
     localStorage.setItem('totalCost', parseInt(price));
-    cartTotalElement.textContent = 'Rs ' + parseInt(price);
+    cartTotalElement.textContent = parseInt(price);
   }
 }
 
@@ -180,7 +180,7 @@ function displayCart(){
     productContainer.innerHTML ='';
     Object.values(cartItems).map( item => {
       productContainer.innerHTML += `
-      <div class="popup-item">
+      <div class="popup-item" data-id="${item.id}">
         <div class="item-img">
           <img src="${item.imageURL}" alt="${item.name}">
         </div>
@@ -191,17 +191,17 @@ function displayCart(){
             <div class="number" data-stock="${item.stock}"> ${item.inCart} </div>
             <div class="increment">+</div>
             <span class="cross">x</span>
-            <div class="item-price">Rs.${item.price}</div>
+            <div class="item-price" data-price="${item.price}">Rs. ${item.price}</div>
           </div>
         </div>
-        <div class="item-total-price">Rs.${item.price * item.inCart}</div>
+        <div class="item-total-price" data-totalPrice="${item.price * item.inCart}">Rs.${item.price * item.inCart}</div>
       </div>
       `
     })
 
   let cartCost = localStorage.getItem('totalCost');
   let cartTotalElement = document.querySelector('.cartTotalVal');
-  cartTotalElement.textContent = 'Rs ' + parseInt(cartCost);
+  cartTotalElement.textContent = parseInt(cartCost);
     incrementCart();
     decrementCart();
   }
@@ -214,15 +214,31 @@ decrementCart();
 function incrementCart(){
   let incrementBtn = document.querySelectorAll('.increment');
   let itemVal = document.querySelectorAll('.number');
+  let itemTotalPrice = document.querySelectorAll('.item-total-price');
+  let itemPrice = document.querySelectorAll('.item-price');
+  let itemIds = document.querySelectorAll('.popup-item');
+
   for(let i=0; i< incrementBtn.length; i++){
     incrementBtn[i].addEventListener('click', () => {
       let itemNum = itemVal[i].innerText;
       let maxValue = itemVal[i].getAttribute('data-stock');
-      var value= parseInt(itemNum,10);
+      let itemAmount = itemPrice[i].getAttribute('data-price');
+      let itemId = itemIds[i].getAttribute('data-id');
+      let cartItem = localStorage.getItem('product');
+      cartItem = JSON.parse(cartItem);
+
+      let value= parseInt(itemNum,10);
       value= isNaN(value) ? '0': value;
       if(value < maxValue){
           value++;
           itemVal[i].innerHTML = value;
+          itemTotalPrice[i].innerHTML = parseInt(value) * parseInt(itemAmount);
+          //update data in local storage
+          if(cartItem != null){
+            cartItem[itemId].inCart = value;
+          } 
+          localStorage.setItem('product', JSON.stringify(cartItem));
+          
       } else {
         alert(`max stock for this Product is ${maxValue}`)
       }
@@ -231,18 +247,35 @@ function incrementCart(){
   }
 }
 
-
+//decrement item in list
 function decrementCart(){
   let decrementBtn = document.querySelectorAll('.decrement');
   let itemVal = document.querySelectorAll('.number');
-  for(let i=0; i< incrementBtn.length; i++){
+  let itemTotalPrice = document.querySelectorAll('.item-total-price');
+  let itemPrice = document.querySelectorAll('.item-price');
+  let itemIds = document.querySelectorAll('.popup-item');
+
+  for(let i=0; i< decrementBtn.length; i++){
     decrementBtn[i].addEventListener('click', () => {
       let itemNum = itemVal[i].innerText;
-      var value= parseInt(itemNum,10);
+      let itemAmount = itemPrice[i].getAttribute('data-price');
+      let itemId = itemIds[i].getAttribute('data-id');
+      let cartItem = localStorage.getItem('product');
+      cartItem = JSON.parse(cartItem);
+
+      let value= parseInt(itemNum,10);
       value= isNaN(value) ? '0': value;
       if(value > 1){
           value--;
           itemVal[i].innerHTML = value;
+          itemTotalPrice[i].innerHTML = parseInt(value) * parseInt(itemAmount);
+
+          //update data in local storage
+          if(cartItem != null){
+          cartItem[itemId].inCart = value;
+        } 
+
+        localStorage.setItem('product', JSON.stringify(cartItem));
       }
       
     })
