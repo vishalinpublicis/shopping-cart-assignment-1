@@ -122,7 +122,6 @@ function openAddToCartPopup(){
   let addToCartBtn = document.querySelector('.add-cart-btn');
   let cartPopup = document.querySelector('#cartModal');
   let emptyCart = document.querySelector('.empty-cart-section');
-  let cartItem = localStorage.getItem('product');
   let emptyCartbtn = document.querySelector('.empty-cart-btn');
   let filledCartbtn = document.querySelector('.filled-cart-btn');
   let productList = document.querySelector('.product-list');
@@ -133,7 +132,7 @@ function openAddToCartPopup(){
     if ("product" in localStorage) {
       emptyCart.style.display = 'none';
       emptyCartbtn.style.display= 'none';
-      filledCartbtn.style.display= 'block';
+      filledCartbtn.style.display= 'flex';
       productList.style.display = 'block';
     } else {
       emptyCart.style.display = 'flex';
@@ -163,13 +162,12 @@ closePopup();
 function totalCartValue(price){
   let cartTotalElement = document.querySelector('.cartTotalVal');
   let cartCost = localStorage.getItem('totalCost');
-
   if(cartCost != null){
     localStorage.setItem('totalCost', parseInt(cartCost) + parseInt(price));
-    cartTotalElement.textContent = parseInt(cartCost) + parseInt(price);
+    cartTotalElement.textContent = 'Rs '+ parseInt(cartCost) + parseInt(price);
   } else {
     localStorage.setItem('totalCost', parseInt(price));
-    cartTotalElement.textContent = parseInt(price);
+    cartTotalElement.textContent = 'Rs ' + parseInt(price);
   }
 }
 
@@ -190,15 +188,63 @@ function displayCart(){
           <h3>${item.name}</h3>
           <div class="item-count">
             <div class="decrement">-</div>
-            <div class="number"> ${item.inCart} </div>
+            <div class="number" data-stock="${item.stock}"> ${item.inCart} </div>
             <div class="increment">+</div>
             <span class="cross">x</span>
             <div class="item-price">Rs.${item.price}</div>
           </div>
         </div>
-        <div class="item-total-price">Rs.${item.price}</div>
-    </div>
+        <div class="item-total-price">Rs.${item.price * item.inCart}</div>
+      </div>
       `
+    })
+
+  let cartCost = localStorage.getItem('totalCost');
+  let cartTotalElement = document.querySelector('.cartTotalVal');
+  cartTotalElement.textContent = 'Rs ' + parseInt(cartCost);
+    incrementCart();
+    decrementCart();
+  }
+}
+
+incrementCart();
+decrementCart();
+
+// increment 
+function incrementCart(){
+  let incrementBtn = document.querySelectorAll('.increment');
+  let itemVal = document.querySelectorAll('.number');
+  for(let i=0; i< incrementBtn.length; i++){
+    incrementBtn[i].addEventListener('click', () => {
+      let itemNum = itemVal[i].innerText;
+      let maxValue = itemVal[i].getAttribute('data-stock');
+      var value= parseInt(itemNum,10);
+      value= isNaN(value) ? '0': value;
+      if(value < maxValue){
+          value++;
+          itemVal[i].innerHTML = value;
+      } else {
+        alert(`max stock for this Product is ${maxValue}`)
+      }
+      
+    })
+  }
+}
+
+
+function decrementCart(){
+  let decrementBtn = document.querySelectorAll('.decrement');
+  let itemVal = document.querySelectorAll('.number');
+  for(let i=0; i< incrementBtn.length; i++){
+    decrementBtn[i].addEventListener('click', () => {
+      let itemNum = itemVal[i].innerText;
+      var value= parseInt(itemNum,10);
+      value= isNaN(value) ? '0': value;
+      if(value > 1){
+          value--;
+          itemVal[i].innerHTML = value;
+      }
+      
     })
   }
 }
