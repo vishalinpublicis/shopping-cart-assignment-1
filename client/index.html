@@ -66,7 +66,7 @@
                         <div class="cart-item">
                             <button class="add-cart-btn" title="Cart">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <div class="cart-text"><span class="card-items-count"> 0 </span>items</div>
+                                <div class="cart-text"><span class="card-items-count"> 0 </span> items</div>
                             </button>
                         </div>
                     </div>
@@ -186,6 +186,43 @@
                 <p>Copywrite © 2011-2022 Sabka Bazaar Grocery Supplies Pvt. Ltd.</p>
             </div>
         </footer>
+
+        <!-- cart popup -->
+
+        <div id="cartModal" class="cartModal">
+            <div class="popup">
+                <a class="close" href="#">&times;</a>
+                <div class="popup-header">
+                    <h3>My Cart (<span class="cart-count"></span> items)</h3>
+                </div>
+                <div class="popup-content cart-content">
+                    <!-- empty cart -->
+                    <div class="empty-cart-section">
+                        <div class="empty-title">No item in your cart.</div>
+                        <div class="empty-details">Your favorite items are just a click away.</div>
+                    </div>
+                    <!-- display cart items here -->
+                    <div class="product-list">
+                       <!-- cart item space -->
+                    </div>
+                </div>
+                <div class="popup-disclaimer">
+                    <img src="./static/images/lowest-price.png" alt="Lowest Price Guaranteed logo">
+                    <span>You won't find it cheaper anywhere</span>
+                </div>
+                <div class="popup-footer">
+                    <p>Promo code can be applied on payment page</p>
+                    <button class="btn popup-btn filled-cart-btn">
+                        <span>Proceed to Checkout</span>
+                        <span class="subtotal cartTotalVal"></span>
+                    </button>
+
+                    <button class="btn popup-btn empty-cart-btn">
+                        <span>Start Shopping</span>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- handelbar -->
         <script type="text/x-handelbars-template" id="categoryTemplate">
