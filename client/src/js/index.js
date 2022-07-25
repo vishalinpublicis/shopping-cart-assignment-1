@@ -121,9 +121,26 @@ function setProductItems(productData){
 function openAddToCartPopup(){
   let addToCartBtn = document.querySelector('.add-cart-btn');
   let cartPopup = document.querySelector('#cartModal');
+  let emptyCart = document.querySelector('.empty-cart-section');
+  let cartItem = localStorage.getItem('product');
+  let emptyCartbtn = document.querySelector('.empty-cart-btn');
+  let filledCartbtn = document.querySelector('.filled-cart-btn');
+  let productList = document.querySelector('.product-list');
+
   addToCartBtn.addEventListener('click', function(){
     cartPopup.style.display = 'block';
     displayCart();
+    if ("product" in localStorage) {
+      emptyCart.style.display = 'none';
+      emptyCartbtn.style.display= 'none';
+      filledCartbtn.style.display= 'block';
+      productList.style.display = 'block';
+    } else {
+      emptyCart.style.display = 'flex';
+      emptyCartbtn.style.display= 'block';
+      filledCartbtn.style.display= 'none';
+      productList.style.display = 'none';
+    }
   })
 }
 //open cart popup listener
@@ -160,7 +177,7 @@ function displayCart(){
   let cartItems= localStorage.getItem('product');
   cartItems = JSON.parse(cartItems);
   let productContainer = document.querySelector('.cart-content .product-list');
-console.log(cartItems);
+
   if(cartItems && productContainer){
     productContainer.innerHTML ='';
     Object.values(cartItems).map( item => {
@@ -173,7 +190,7 @@ console.log(cartItems);
           <h3>${item.name}</h3>
           <div class="item-count">
             <div class="decrement">-</div>
-            <div class="number"> 1 </div>
+            <div class="number"> ${item.inCart} </div>
             <div class="increment">+</div>
             <span class="cross">x</span>
             <div class="item-price">Rs.${item.price}</div>

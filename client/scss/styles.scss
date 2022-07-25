@@ -145,6 +145,11 @@ body {
       }
     }
 
+    .product-list{
+      overflow: auto;
+      max-height: 60vh;
+    }
+
     .popup-disclaimer {
       background: $color-white;
       margin: 1rem;
