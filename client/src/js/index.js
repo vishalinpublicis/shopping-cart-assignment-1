@@ -58,7 +58,7 @@ function addTocartListener(productData){
         let productId = addToCart[i].getAttribute('data-id');
         let itemInProduct = productData.find(element => element.id == productId);
         cartNumber(itemInProduct);
-        totalCartValue(itemInProduct.price)
+        totalCartValue(itemInProduct.price);
       })
     }
 }
@@ -97,21 +97,33 @@ function setProductItems(productData){
   let cartItem = localStorage.getItem('product');
   cartItem = JSON.parse(cartItem);
 
-  localStorage.setItem('product', JSON.stringify(productData));
+  if(cartItem != null){
+      if(cartItem[productData.id] == undefined){
+        cartItem = {
+          ...cartItem,
+          [productData.id] : productData
+        }
+      }
+    cartItem[productData.id].inCart += 1;
+  } else {
+    productData.inCart = 1;
+    cartItem ={
+      [productData.id]: productData
+    }
+  }
+
+  localStorage.setItem('product', JSON.stringify(cartItem));
 
 }
 
-function getProductData() {
- let data = localStorage.getItem('product')
-  console.log(data);
-}
 
 //open add to cart popup
 function openAddToCartPopup(){
   let addToCartBtn = document.querySelector('.add-cart-btn');
   let cartPopup = document.querySelector('#cartModal');
   addToCartBtn.addEventListener('click', function(){
-    cartPopup.style.display = 'block'
+    cartPopup.style.display = 'block';
+    displayCart();
   })
 }
 //open cart popup listener
@@ -142,5 +154,34 @@ function totalCartValue(price){
     localStorage.setItem('totalCost', parseInt(price));
     cartTotalElement.textContent = parseInt(price);
   }
+}
 
+function displayCart(){
+  let cartItems= localStorage.getItem('product');
+  cartItems = JSON.parse(cartItems);
+  let productContainer = document.querySelector('.cart-content .product-list');
+console.log(cartItems);
+  if(cartItems && productContainer){
+    productContainer.innerHTML ='';
+    Object.values(cartItems).map( item => {
+      productContainer.innerHTML += `
+      <div class="popup-item">
+        <div class="item-img">
+          <img src="${item.imageURL}" alt="${item.name}">
+        </div>
+        <div class="item-info">
+          <h3>${item.name}</h3>
+          <div class="item-count">
+            <div class="decrement">-</div>
+            <div class="number"> 1 </div>
+            <div class="increment">+</div>
+            <span class="cross">x</span>
+            <div class="item-price">Rs.${item.price}</div>
+          </div>
+        </div>
+        <div class="item-total-price">Rs.${item.price}</div>
+    </div>
+      `
+    })
+  }
 }

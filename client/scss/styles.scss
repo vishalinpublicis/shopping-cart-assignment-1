@@ -69,55 +69,59 @@ body {
       }
     }
     .popup-content{
-      .popup-item {
-        display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        background: $color-white;
-        margin: 1rem 0;
-        padding: 1rem 1.4rem;
-        h3 {
-          margin: 0;
-        }
-        .item-img {
-          height: 80px;
-          width: 80px;
-          img {
-            max-height: 100%;
-            max-width: 100%;
-          }
-        }
-        .item-info {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+      .product-list{
+        overflow: auto;
+        max-height: 60vh;
+        .popup-item {
+          display: grid;
+          grid-template-columns: 1fr 2fr 1fr;
+          background: $color-white;
+          margin: 1rem 0;
+          padding: 1rem 1.4rem;
           h3 {
-            margin-bottom: 0.8rem;
+            margin: 0;
           }
-        }
-        .item-count {
-          display: flex;
-          & .decrement,
-          & .increment {
-            height: 24px;
-            line-height: 20px;
-            width: 24px;
-            font-size: 1.4em;
-            border-radius: 50%;
-            background: $color-primary;
-            color: $color-white;
-            text-align: center;
-            cursor: pointer;
+          .item-img {
+            height: 80px;
+            width: 80px;
+            img {
+              max-height: 100%;
+              max-width: 100%;
+            }
           }
-          .number {
-            margin: 0 1rem;
+          .item-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h3 {
+              margin-bottom: 0.8rem;
+            }
           }
-          .cross {
-            margin: 0 1rem;
+          .item-count {
+            display: flex;
+            & .decrement,
+            & .increment {
+              height: 24px;
+              line-height: 20px;
+              width: 24px;
+              font-size: 1.4em;
+              border-radius: 50%;
+              background: $color-primary;
+              color: $color-white;
+              text-align: center;
+              cursor: pointer;
+            }
+            .number {
+              margin: 0 1rem;
+            }
+            .cross {
+              margin: 0 1rem;
+            }
           }
-        }
-        .item-total-price {
-          align-self: center;
-          margin-left: auto;
+          .item-total-price {
+            align-self: center;
+            margin-left: auto;
+          }
         }
       }
       
