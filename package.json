@@ -8,9 +8,7 @@
   },
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "canned": "^0.3.12"
-  },
+  "dependencies": {},
   "devDependencies": {
     "css-loader": "^6.7.1",
     "handlebars-loader": "^1.7.2",

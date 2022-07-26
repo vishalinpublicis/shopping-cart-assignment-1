@@ -66,7 +66,6 @@ function addToCart(id) {
   // check if prodcut already exist in cart
   if (cart.some((item) => item.id === id)) {
     for (var i = 0; i < cart.length; i++) {
-      
       let stockBoolean = (cart[i].numberOfUnits < cart[i].stock);
       if(id === cart[i].id && stockBoolean ){  //look for match with name
           cart[i].numberOfUnits += 1;
@@ -75,7 +74,6 @@ function addToCart(id) {
 
   } else {
     const item = productData.find((product) => product.id === id);
-
     cart.push({
       ...item,
       numberOfUnits: 1,
@@ -89,6 +87,7 @@ function addToCart(id) {
 function updateCart() {
   renderCartItems();
   renderSubtotal();
+  removeCartItem();
 
   // save cart to local storage
   localStorage.setItem("CART", JSON.stringify(cart));
@@ -116,11 +115,12 @@ function renderCartItems() {
   cart.forEach((item) => {
     cartItemsEl.innerHTML += `
         <div class="popup-item" data-id="${item.id}">
+        <button class="delete-item" title="Remove Item" data-id="${item.id}"><i class="fa fa-times" aria-hidden="true"></i></button>
         <div class="item-img">
           <img src="${item.imageURL}" alt="${item.name}">
         </div>
         <div class="item-info">
-          <h3>${item.name}</h3>
+          <div class="item-title">${item.name}</div>
           <div class="item-count">
             <div class="decrement updateUnit" data-stock="${item.stock}" data-action="minus" data-id="${item.id}">-</div>
             <div class="number" data-stock="${item.stock}"> ${item.numberOfUnits} </div>
@@ -135,42 +135,6 @@ function renderCartItems() {
     });
     // updateNumberListner();
     updateUnitNumber();
-}
-
-// update cart unit
-function updateNumberListner(){
-  let updateBtn = document.querySelectorAll('.updateUnit');
-    for(let i=0;i < updateBtn.length;i++){
-      updateBtn[i].addEventListener( 'click', () => {
-        let productId = updateBtn[i].getAttribute('data-id');
-        let btnAction = updateBtn[i].getAttribute('data-action');
-        console.log(btnAction, productId);
-        // changeNumberOfUnits(btnAction, productId);
-      })
-    }
-}
-
-// change number of units for an item
-function changeNumberOfUnits(action, id) {
-  console.log(action. id);
-  cart = cart.map((item) => {
-    let numberOfUnits = item.numberOfUnits;
-
-    if (item.id === id) {
-      if (action === "minus" && numberOfUnits > 1) {
-        numberOfUnits--;
-      } else if (action === "plus" && numberOfUnits < item.instock) {
-        numberOfUnits++;
-      }
-    }
-
-    return {
-      ...item,
-      numberOfUnits,
-    };
-  });
-
-  updateCart();
 }
 
 //open add to cart popup
@@ -239,3 +203,26 @@ function updateUnitNumber(){
 }
 
 updateUnitNumber();
+
+//attach event remove item 
+function removeCartItem(){
+
+  let deleteItemBtn = document.querySelectorAll('.delete-item');
+
+  for(let i=0; i< deleteItemBtn.length; i++){
+    let productId = deleteItemBtn[i].getAttribute('data-id');
+    deleteItemBtn[i].addEventListener('click', () => {
+      console.log('clikc hua');
+      removeItemFromCart(productId);
+    })
+  }
+}
+
+
+// remove item from cart
+function removeItemFromCart(id) {
+  cart = cart.filter((item) => item.id !== id);
+
+  openAddToCartPopup();
+  updateCart();
+}
