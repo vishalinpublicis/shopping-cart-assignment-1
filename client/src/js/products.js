@@ -1,16 +1,36 @@
-
-// product page js
+//imports
 const Handlebars = require("handlebars");
 const productJsonRequest = new Request('src/json/products.json');
 
+//select element
+const productsEl = document.querySelector(".product-cards");
+let cartItemsEl = document.querySelector('.cart-content .product-list');
+const subtotalEl = document.querySelector(".cartTotalVal");
+const totalItemsInCartEl = document.querySelector(".card-items-count");
+const loaderEl = document.querySelector('.loader');
+let cartPopup = document.querySelector('#cartModal');
+let cartBtn = document.querySelector('.add-cart-btn');
+let emptyCartEl = document.querySelector('.empty-cart-section');
+let emptyCartBtn = document.querySelector('.empty-cart-btn');
+let filledCartBtn = document.querySelector('.filled-cart-btn');
+let cartCountHeaderEl = document.querySelector('.cart-count');
+
+// product array
+let productData = [];
+
+//fetching product data from api
 fetch(productJsonRequest)
   .then(response => response.json())
   .then(data => {
-    createProductHtml(data);
+    if(data){
+      createProductHtml(data);
+      loaderEl.style.display= 'none';
+      productData = data;
+    }
   })
   .catch(console.error);
 
-//   create html for product function
+//product html with handelbarjs template engine
 function createProductHtml(productData){
     var template = document.getElementById('productTemplate');
     if(template)
@@ -21,270 +41,194 @@ function createProductHtml(productData){
     var categoryContainer = document.getElementById('productContainer');
     categoryContainer.innerHTML = ourGeneratedTemplate;
 
-    // add to cart funct
-    if(productData){
-      addTocartListener(productData);
-    }
-
+    // add to cart
+    addTocartListener();
 }
 
+// cart array
+let cart = JSON.parse(localStorage.getItem("CART")) || [];
+updateCart();
 
-// add to cart functionality
-function addTocartListener(productData){
-  let addToCart = document.querySelectorAll('.addToCart');
-    for(let i=0;i < addToCart.length;i++){
-      addToCart[i].addEventListener( 'click', () => {
-        let productId = addToCart[i].getAttribute('data-id');
-        let itemInProduct = productData.find(element => element.id == productId);
-        cartNumber(itemInProduct);
-        totalCartValue(itemInProduct.price);
+
+//attach addTocart event to elements
+function addTocartListener(){
+  let addToCartBtn = document.querySelectorAll('.addToCart');
+    for(let i=0;i < addToCartBtn.length;i++){
+      addToCartBtn[i].addEventListener( 'click', () => {
+        let productId = addToCartBtn[i].getAttribute('data-id');
+        addToCart(productId);
       })
     }
 }
 
-//check if cart item is there in local storage
-function onLoadCartData(){
-  let productNum = localStorage.getItem('cartNumber');
-  if(productNum){
-    document.querySelector('.card-items-count').textContent = productNum;
-    document.querySelector('.cart-count').textContent = productNum;
-  }
-}
-
-// add cart item in local storage and in cart
-function cartNumber(productData){
-  // console.log(productData);
-  let productNumbers = localStorage.getItem('cartNumber');
-  productNumbers = parseInt(productNumbers);
-
-  if(productNumbers){
-    localStorage.setItem('cartNumber', productNumbers + 1);
-    document.querySelector('.card-items-count').textContent = productNumbers + 1;
-    document.querySelector('.cart-count').textContent = productNumbers + 1;
-
-  } else{
-    localStorage.setItem('cartNumber', 1);
-    document.querySelector('.card-items-count').textContent = 1;
-    document.querySelector('.cart-count').textContent = 1;
-  }
-
-  setProductItems(productData);
-}
-
-
-//calling onload cart func
-onLoadCartData();
-
-function setProductItems(productData){
-  let cartItem = localStorage.getItem('product');
-  cartItem = JSON.parse(cartItem);
-
-  if(cartItem != null){
-      if(cartItem[productData.id] == undefined){
-        cartItem = {
-          ...cartItem,
-          [productData.id] : productData
-        }
-      }
-    cartItem[productData.id].inCart += 1;
+// add to cart 
+function addToCart(id) {
+  // check if prodcut already exist in cart
+  if (cart.some((item) => item.id === id)) {
+    alert('product already there')
   } else {
-    productData.inCart = 1;
-    cartItem ={
-      [productData.id]: productData
-    }
+    const item = productData.find((product) => product.id === id);
+
+    cart.push({
+      ...item,
+      numberOfUnits: 1,
+    });
   }
 
-  localStorage.setItem('product', JSON.stringify(cartItem));
+  updateCart();
+}
 
+// update cart
+function updateCart() {
+  renderCartItems();
+  renderSubtotal();
+
+  // save cart to local storage
+  localStorage.setItem("CART", JSON.stringify(cart));
+}
+
+// calculate and render subtotal
+function renderSubtotal() {
+  let totalPrice = 0,
+    totalItems = 0;
+
+  cart.forEach((item) => {
+    totalPrice += item.price * item.numberOfUnits;
+    totalItems += item.numberOfUnits;
+  });
+
+  subtotalEl.innerHTML = ` Rs ${totalPrice.toFixed(2)}`;
+  totalItemsInCartEl.innerHTML = totalItems;
+  cartCountHeaderEl.innerHTML = totalItems
 }
 
 
-//open add to cart popup
-function openAddToCartPopup(){
-  let addToCartBtn = document.querySelector('.add-cart-btn');
-  let cartPopup = document.querySelector('#cartModal');
-  let emptyCart = document.querySelector('.empty-cart-section');
-  let emptyCartbtn = document.querySelector('.empty-cart-btn');
-  let filledCartbtn = document.querySelector('.filled-cart-btn');
-  let productList = document.querySelector('.product-list');
-
-  addToCartBtn.addEventListener('click', function(){
-    cartPopup.style.display = 'block';
-    displayCart();
-    if ("product" in localStorage) {
-      emptyCart.style.display = 'none';
-      emptyCartbtn.style.display= 'none';
-      filledCartbtn.style.display= 'flex';
-      productList.style.display = 'block';
-    } else {
-      emptyCart.style.display = 'flex';
-      emptyCartbtn.style.display= 'block';
-      filledCartbtn.style.display= 'none';
-      productList.style.display = 'none';
-    }
-  })
-}
-//open cart popup listener
-openAddToCartPopup();
-
-// close popup
-function closePopup(){
-  let closeBtn = document.querySelector('#cartModal .close');
-  let cartPopup = document.querySelector('#cartModal');
-  closeBtn.addEventListener('click', function(){
-    cartPopup.style.display = 'none';
-  })
-}
-
-//close add to cart modal
-closePopup();
-
-
-// total product cost in cart popup
-function totalCartValue(price){
-  let cartTotalElement = document.querySelector('.cartTotalVal');
-  let cartCost = localStorage.getItem('totalCost');
-  if(cartCost != null){
-    localStorage.setItem('totalCost', parseInt(cartCost) + parseInt(price));
-    cartTotalElement.textContent = parseInt(cartCost) + parseInt(price);
-  } else {
-    localStorage.setItem('totalCost', parseInt(price));
-    cartTotalElement.textContent = parseInt(price);
-  }
-}
-
-function displayCart(){
-  let cartItems= localStorage.getItem('product');
-  cartItems = JSON.parse(cartItems);
-  let productContainer = document.querySelector('.cart-content .product-list');
-
-  if(cartItems && productContainer){
-    productContainer.innerHTML ='';
-    Object.values(cartItems).map( item => {
-      productContainer.innerHTML += `
-      <div class="popup-item" data-id="${item.id}">
+// render cart items
+function renderCartItems() {
+  cartItemsEl.innerHTML = ""; // clear cart element
+  cart.forEach((item) => {
+    cartItemsEl.innerHTML += `
+        <div class="popup-item" data-id="${item.id}">
         <div class="item-img">
           <img src="${item.imageURL}" alt="${item.name}">
         </div>
         <div class="item-info">
           <h3>${item.name}</h3>
           <div class="item-count">
-            <div class="decrement">-</div>
-            <div class="number" data-stock="${item.stock}"> ${item.inCart} </div>
-            <div class="increment">+</div>
+            <div class="decrement updateUnit" data-stock="${item.stock}" data-action="minus" data-id="${item.id}">-</div>
+            <div class="number" data-stock="${item.stock}"> ${item.numberOfUnits} </div>
+            <div class="increment updateUnit" data-stock="${item.stock}" data-action="plus" data-id="${item.id}">+</div>
             <span class="cross">x</span>
             <div class="item-price" data-price="${item.price}">Rs. ${item.price}</div>
           </div>
         </div>
-        <div class="item-total-price" data-totalPrice="${item.price * item.inCart}">${item.price * item.inCart}</div>
+        <div class="item-total-price" data-totalPrice="${item.price * item.numberOfUnits}">${item.price * item.numberOfUnits}</div>
       </div>
-      `
-    })
-
-  let cartCost = localStorage.getItem('totalCost');
-  let cartTotalElement = document.querySelector('.cartTotalVal');
-  cartTotalElement.textContent = parseInt(cartCost);
-    incrementCart();
-    decrementCart();
-  }
+      `;
+    });
+    // updateNumberListner();
+    updateUnitNumber();
 }
 
-incrementCart();
-decrementCart();
-
-// increment 
-function incrementCart(){
-  let incrementBtn = document.querySelectorAll('.increment');
-  let itemVal = document.querySelectorAll('.number');
-  let itemTotalPrice = document.querySelectorAll('.item-total-price');
-  let itemPrice = document.querySelectorAll('.item-price');
-  let itemIds = document.querySelectorAll('.popup-item');
-  let cartTotalElement = document.querySelector('.cartTotalVal');
-  let cartItem = localStorage.getItem('product');
-  let totalCountArr = [];
-
-  for(let i=0; i< incrementBtn.length; i++){
-    incrementBtn[i].addEventListener('click', () => {
-      let itemNum = itemVal[i].innerText;
-      let maxValue = itemVal[i].getAttribute('data-stock');
-      let itemAmount = itemPrice[i].getAttribute('data-price');
-      let itemId = itemIds[i].getAttribute('data-id');
-      let cartItem = localStorage.getItem('product');
-      cartItem = JSON.parse(cartItem);
-
-      let value= parseInt(itemNum,10);
-      value= isNaN(value) ? '0': value;
-      if(value < maxValue){
-          value++;
-          itemVal[i].innerHTML = value;
-          itemTotalPrice[i].innerHTML = parseInt(value) * parseInt(itemAmount);
-          //update data in local storage
-          if(cartItem != null){
-            cartItem[itemId].inCart = value;
-          } 
-          localStorage.setItem('product', JSON.stringify(cartItem));
-          
-      } else {
-        alert(`max stock for this Product is ${maxValue}`)
-      }
-    })
-  }
-  //update total value of cart
-    cartItem = JSON.parse(cartItem);
-
-    Object.values(cartItem).map( item => {
-        totalCountArr.push(item.price * item.inCart);
-    })
-
-    let totalSum = totalCountArr.reduce((a, b) => a + b, 0);
-
-    localStorage.setItem('totalCost', parseInt(totalSum));
-    cartTotalElement.textContent = totalSum;
+// update cart unit
+function updateNumberListner(){
+  let updateBtn = document.querySelectorAll('.updateUnit');
+    for(let i=0;i < updateBtn.length;i++){
+      updateBtn[i].addEventListener( 'click', () => {
+        let productId = updateBtn[i].getAttribute('data-id');
+        let btnAction = updateBtn[i].getAttribute('data-action');
+        console.log(btnAction, productId);
+        // changeNumberOfUnits(btnAction, productId);
+      })
+    }
 }
 
-//decrement item in list
-function decrementCart(){
-  let decrementBtn = document.querySelectorAll('.decrement');
-  let itemVal = document.querySelectorAll('.number');
-  let itemTotalPrice = document.querySelectorAll('.item-total-price');
-  let itemPrice = document.querySelectorAll('.item-price');
-  let itemIds = document.querySelectorAll('.popup-item');
+// change number of units for an item
+function changeNumberOfUnits(action, id) {
+  console.log(action. id);
+  cart = cart.map((item) => {
+    let numberOfUnits = item.numberOfUnits;
 
-  for(let i=0; i< decrementBtn.length; i++){
-    decrementBtn[i].addEventListener('click', () => {
-      let itemNum = itemVal[i].innerText;
-      let itemAmount = itemPrice[i].getAttribute('data-price');
-      let itemId = itemIds[i].getAttribute('data-id');
-      let cartItem = localStorage.getItem('product');
-      cartItem = JSON.parse(cartItem);
-
-      let value= parseInt(itemNum,10);
-      value= isNaN(value) ? '0': value;
-      if(value > 1){
-          value--;
-          itemVal[i].innerHTML = value;
-          itemTotalPrice[i].innerHTML = parseInt(value) * parseInt(itemAmount);
-
-          //update data in local storage
-          if(cartItem != null){
-          cartItem[itemId].inCart = value;
-        } 
-
-        localStorage.setItem('product', JSON.stringify(cartItem));
+    if (item.id === id) {
+      if (action === "minus" && numberOfUnits > 1) {
+        numberOfUnits--;
+      } else if (action === "plus" && numberOfUnits < item.instock) {
+        numberOfUnits++;
       }
-      
-    })
-  }
+    }
 
-  //update total value of cart
-  cartItem = JSON.parse(cartItem);
+    return {
+      ...item,
+      numberOfUnits,
+    };
+  });
 
-  Object.values(cartItem).map( item => {
-      totalCountArr.push(item.price * item.inCart);
+  updateCart();
+}
+
+//open add to cart popup
+function openAddToCartPopup(){
+  cartBtn.addEventListener('click', function(){
+    cartPopup.style.display = 'block';
+    updateCart();
+    
+    if (cart.length) {
+      emptyCartEl.style.display = 'none';
+      emptyCartBtn.style.display= 'none';
+      filledCartBtn.style.display= 'flex';
+      productsEl.style.display = 'block';
+    } else {
+      emptyCartEl.style.display = 'flex';
+      emptyCartBtn.style.display= 'block';
+      filledCartBtn.style.display= 'none';
+    }
   })
-
-  let totalSum = totalCountArr.reduce((a, b) => a + b, 0);
-
-  localStorage.setItem('totalCost', parseInt(totalSum));
-  cartTotalElement.textContent = totalSum;
 }
+
+openAddToCartPopup();
+
+
+// close cart popup
+function closePopup(){
+  let closeBtn = document.querySelector('#cartModal .close');
+  closeBtn.addEventListener('click', function(){
+    cartPopup.style.display = 'none';
+  })
+}
+
+closePopup();
+
+
+// update product unit in cart 
+function updateUnitNumber(){
+  let updateUnitBtn = document.querySelectorAll('.updateUnit');
+
+  for(let i=0; i< updateUnitBtn.length; i++){
+    updateUnitBtn[i].addEventListener('click', () => {
+      let btnAction = updateUnitBtn[i].getAttribute('data-action');
+      let productId = updateUnitBtn[i].getAttribute('data-id');
+      let inStock = updateUnitBtn[i].getAttribute('data-stock');
+
+      cart = cart.map((item) => {
+        let numberOfUnits = item.numberOfUnits;
+        if (item.id === productId) {
+          if (btnAction === "minus" && numberOfUnits > 1) {
+            numberOfUnits--;
+          } else if (btnAction === "plus" && numberOfUnits < inStock) {
+            numberOfUnits++;
+          }
+        }
+    
+        return {
+          ...item,
+          numberOfUnits,
+        };
+      });
+    
+      updateCart();
+
+    })
+  }
+}
+
+updateUnitNumber();
