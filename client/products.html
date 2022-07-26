@@ -26,7 +26,11 @@
         <link rel="stylesheet" href="./scss/styles.css">
     </head>
     <body>
-        
+        <!-- loader -->
+        <div class="loader">
+            <span class="loader__ring"></span>
+        </div>
+
         <!-- Header -->
         <header class="app-header">
             <nav class="navbar">
@@ -100,7 +104,7 @@
                     </ul>
                 </div>
                 <div class="product-cards right-section" id="productContainer">
-                   <!-- Product item comes here -->
+                   <!-- Render Product here -->
                 </div>
             </section>
         </main>
@@ -150,7 +154,6 @@
             </div>
         </div>
 
-
         <!-- handelbar -->
         <script type="text/x-handelbars-template" id="productTemplate">
             {{#each this}}
@@ -168,7 +171,7 @@
                             <div class="product-footer">
                                 <div class="product-price">MRP Rs. {{price}}</div>
                                 <button class="btn buy-btn addToCart" data-id="{{id}}">Buy Now</button>
-                                <button class="btn buy-btn-sm addToCart" data-id="{{id}}">Buy Now @ Rs. {{price}}</button>
+                                <button class="btn buy-btn-sm addToCart" data-id="{{id}}" >Buy Now @ Rs. {{price}}</button>
                             </div>
                         </div>
 
