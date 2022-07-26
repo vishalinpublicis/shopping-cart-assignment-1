@@ -689,6 +689,7 @@ a {
   margin: 0;
 }
 .cartModal .popup .popup-content .product-list .popup-item .delete-item {
+  display: none;
   width: 1.5rem;
   height: 1.5rem;
   background: #de1313;
