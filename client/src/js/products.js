@@ -65,7 +65,14 @@ function addTocartListener(){
 function addToCart(id) {
   // check if prodcut already exist in cart
   if (cart.some((item) => item.id === id)) {
-    alert('product already there')
+    for (var i = 0; i < cart.length; i++) {
+      
+      let stockBoolean = (cart[i].numberOfUnits < cart[i].stock);
+      if(id === cart[i].id && stockBoolean ){  //look for match with name
+          cart[i].numberOfUnits += 1;
+      }
+   }
+
   } else {
     const item = productData.find((product) => product.id === id);
 
