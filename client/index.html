@@ -227,6 +227,7 @@
         <!-- handelbar -->
         <script type="text/x-handelbars-template" id="categoryTemplate">
             {{#each this}}
+                {{#if imageUrl}}
                 <div class="category-item">
                     <div class="product-img">
                         <img src="{{imageUrl}}" alt="{{name}}" loading="lazy"/>
@@ -237,6 +238,7 @@
                         <button class="explore-btn">Explore fruit-and-veg</button>
                     </div>
                 </div>
+                {{/if}}
             {{/each}}
         </script>
         <script src="./dist/bundle.js" defer></script>
