@@ -85,22 +85,8 @@
                 <div class="product-filter left-section">
                     <label for="filterType">Select Filter</label>
                     <input id="filterType" type="checkbox" />   
-                    <ul>
-                        <li>
-                            <a href="#">Fruits & Vegetables</a>
-                        </li>
-                        <li>
-                            <a href="#">Bakery Cakes and Dairy</a>
-                        </li>
-                        <li>
-                            <a href="#">Beverages</a>
-                        </li>
-                        <li>
-                            <a href="#">Beuty and Hygiene</a>
-                        </li>
-                        <li>
-                            <a href="#">Baby Care</a>
-                        </li>
+                    <ul id="categoryContainer">
+                        <!-- category lis redner here -->
                     </ul>
                 </div>
                 <div class="product-cards right-section" id="productContainer">
@@ -118,7 +104,6 @@
         </footer>
 
         <!-- cart popup -->
-
         <div id="cartModal" class="cartModal">
             <div class="popup">
                 <a class="close" href="#">&times;</a>
@@ -154,7 +139,17 @@
             </div>
         </div>
 
-        <!-- handelbar -->
+        <!-- category list handerlbar template -->
+         <script type="text/x-handelbars-template" id="categoryTemplate">
+            {{#each this}}
+                <li>
+                    <a href="javascript:void(0)" data-category="{{id}}">{{name}}</a>
+                </li>
+            {{/each}}
+        </script>
+
+
+        <!-- produt list handelbar template -->
         <script type="text/x-handelbars-template" id="productTemplate">
             {{#each this}}
                 <div class="product-card">
@@ -178,6 +173,14 @@
                     </div>
                 </div>
             {{/each}}
+        </script>
+
+        <!-- empty producy -->
+        <script type="text/x-handelbars-template" id="emptyProduct">
+            <div class="empty-container">
+                <div class="title">Sorry</div>
+                <div class="description">No Product Found on this category</div>
+            </div>
         </script>
         <script src="./dist/bundle.js" defer></script>
 

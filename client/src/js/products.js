@@ -1,6 +1,7 @@
 //imports
 const Handlebars = require("handlebars");
 const productJsonRequest = new Request('src/json/products.json');
+const CategoryJsonRequest = new Request('src/json/categories.json');
 
 //select element
 const productsEl = document.querySelector(".product-cards");
@@ -32,17 +33,28 @@ fetch(productJsonRequest)
 
 //product html with handelbarjs template engine
 function createProductHtml(productData){
-    var template = document.getElementById('productTemplate');
-    if(template)
-    var productTemplate = template.innerHTML;
-    var compiledTemplate = Handlebars.compile(productTemplate);
-    var ourGeneratedTemplate = compiledTemplate(productData);
-
-    var categoryContainer = document.getElementById('productContainer');
-    categoryContainer.innerHTML = ourGeneratedTemplate;
-
-    // add to cart
-    addTocartListener();
+    if(productData.length){
+      var template = document.getElementById('productTemplate');
+      if(template)
+      var productTemplate = template.innerHTML;
+      var compiledTemplate = Handlebars.compile(productTemplate);
+      var ourGeneratedTemplate = compiledTemplate(productData);
+  
+      var categoryContainer = document.getElementById('productContainer');
+      categoryContainer.innerHTML = ourGeneratedTemplate;
+  
+      // add to cart
+      addTocartListener();
+    } else {
+      var template = document.getElementById('emptyProduct');
+      if(template)
+      var productTemplate = template.innerHTML;
+      var compiledTemplate = Handlebars.compile(productTemplate);
+      var ourGeneratedTemplate = compiledTemplate(productData);
+  
+      var categoryContainer = document.getElementById('productContainer');
+      categoryContainer.innerHTML = ourGeneratedTemplate;
+    }
 }
 
 // cart array
@@ -225,4 +237,59 @@ function removeItemFromCart(id) {
 
   openAddToCartPopup();
   updateCart();
+}
+
+
+// category list api call
+fetch(CategoryJsonRequest)
+  .then(response => response.json())
+  .then(data => {
+    createCategoryHtml(data);
+  filterCategoryListner();
+
+  })
+  .catch(console.error);
+
+  //category list html using handelbar template
+function createCategoryHtml(categoryData){
+  const allCategoryObj = {
+    "name": "All",
+    "id": ""
+  }
+  newCategoryData = [allCategoryObj, ...categoryData];
+  const template = document.getElementById('categoryTemplate');
+  if(template)
+  var categoryTemplate = template.innerHTML;
+  var compiledTemplate = Handlebars.compile(categoryTemplate);
+  var ourGeneratedTemplate = compiledTemplate(newCategoryData);
+
+  var categoryContainer = document.getElementById('categoryContainer');
+    categoryContainer.innerHTML = ourGeneratedTemplate;
+
+  //once item render then call
+  filterCategoryListner();
+}
+
+//attach click event to category links
+function filterCategoryListner(){
+  var link = document.getElementById('categoryContainer').getElementsByTagName('a');
+  for(let i=0; i< link.length; i++){
+    link[i].addEventListener('click', function(event){
+      event.preventDefault();
+      let categoryId = link[i].getAttribute('data-category');
+      filterProduct(categoryId)
+    }, false)
+  }
+}
+
+
+function filterProduct(id){
+  if(id === undefined || id === null || id === ''){
+    createProductHtml(productData);
+  } else {
+    let productArray = productData.filter( (product) =>{
+      return product.category === id;
+    })
+    createProductHtml(productArray);
+  }
 }

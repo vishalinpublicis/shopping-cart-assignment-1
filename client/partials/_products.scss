@@ -3,7 +3,7 @@
   .product-filter{
     background-color: #eaeaea;
     padding: 0.6rem;  
-    flex: 1 0 20%;
+    flex: 0 0 20%;
 
     #filterType, label{
       display: none;
@@ -27,6 +27,7 @@
   .product-cards{
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
 
     .product-card{
       display: flex;
@@ -83,6 +84,23 @@
             }
           }
         }
+      }
+    }
+
+    .empty-container{
+      display: flex;
+      flex: 1;
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: center;
+      .title{
+        color: #ffca55;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+      .description{
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
       }
     }
   }
@@ -144,6 +162,10 @@
                 }
               }
             }
+        }
+
+        .empty-container{
+          height: 50vh;
         }
       }
     }
