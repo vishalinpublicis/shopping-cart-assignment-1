@@ -68,7 +68,7 @@
                         </ul>
                         <!-- cart item -->
                         <div class="cart-item">
-                            <button class="add-cart-btn" title="Cart">
+                            <button class="add-cart-btn" title="Cart" aria-label="Cart">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <div class="cart-text"><span class="card-items-count"> 0 </span> items</div>
                             </button>
@@ -85,7 +85,7 @@
                 <div class="product-filter left-section">
                     <label for="filterType">Select Filter</label>
                     <input id="filterType" type="checkbox" />   
-                    <ul id="categoryContainer">
+                    <ul id="categoryContainer" role="navigation" aria-label="Product Filter Menu">
                         <!-- category lis redner here -->
                     </ul>
                 </div>
@@ -106,7 +106,7 @@
         <!-- cart popup -->
         <div id="cartModal" class="cartModal">
             <div class="popup">
-                <a class="close" href="#">&times;</a>
+                <a class="close" href="javascript:void(0)" role="button" title="Close Popup" aria-label="Close Popup">&times;</a>
                 <div class="popup-header">
                     <h3>My Cart (<span class="cart-count"></span> items)</h3>
                 </div>

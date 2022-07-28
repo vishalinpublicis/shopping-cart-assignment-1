@@ -64,7 +64,7 @@
                         </ul>
                         <!-- cart item -->
                         <div class="cart-item">
-                            <button class="add-cart-btn" title="Cart">
+                            <button class="add-cart-btn" title="Cart" aria-label="Cart">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <div class="cart-text"><span class="card-items-count"> 0 </span> items</div>
                             </button>
@@ -79,7 +79,7 @@
 
         <!-- offer's carousel -->
 
-        <section class="slideshow" aria-label="carousel">
+        <section class="slideshow" aria-label="carousel" role="slider">
             <div class="photo_slider">
                 <input type="radio" name="slider" class="slide-radio1" checked id="slider_1" />
                 <input type="radio" name="slider" class="slide-radio2" id="slider_2" />
@@ -122,7 +122,7 @@
 
         <!-- Product category -->
 
-        <section class="product-category container" id="categoryContainer">
+        <section class="product-category container" id="categoryContainer" aria-label="Product Category">
             <!-- <div class="category-item">
                 <div class="product-img">
                     <img src="./static/images/category/fruits.png" alt="Fruits and Vegetables" />
@@ -191,7 +191,7 @@
 
         <div id="cartModal" class="cartModal">
             <div class="popup">
-                <a class="close" href="#">&times;</a>
+                <a class="close" href="javascript:void(0)" role="button" title="Close Popup" aria-label="Close Popup">&times;</a>
                 <div class="popup-header">
                     <h3>My Cart (<span class="cart-count"></span> items)</h3>
                 </div>

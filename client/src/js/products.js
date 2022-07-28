@@ -134,9 +134,9 @@ function renderCartItems() {
         <div class="item-info">
           <div class="item-title">${item.name}</div>
           <div class="item-count">
-            <div class="decrement updateUnit" data-stock="${item.stock}" data-action="minus" data-id="${item.id}">-</div>
+            <div class="decrement updateUnit" data-stock="${item.stock}" data-action="minus" data-id="${item.id}" aria-label="Decrement Button">-</div>
             <div class="number" data-stock="${item.stock}"> ${item.numberOfUnits} </div>
-            <div class="increment updateUnit" data-stock="${item.stock}" data-action="plus" data-id="${item.id}">+</div>
+            <div class="increment updateUnit" data-stock="${item.stock}" data-action="plus" data-id="${item.id}" aria-label="Increment Button">+</div>
             <span class="cross">x</span>
             <div class="item-price" data-price="${item.price}">Rs. ${item.price}</div>
           </div>
