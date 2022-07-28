@@ -32,16 +32,17 @@
 }
 
 
-@mixin container($screen-size: lg) {
-    margin: 0 auto;
-    @if $screen-size == sm {
-        max-width: 320px
-    } @else if $screen-size == md {
-        max-width: 720px
-    } @else if $screen-size == lg {
-        max-width: 1024px
-    } @else {
-        max-width: 1280px
+@mixin media-query($screen-size: lg) {
+    @if $screen-size == xs {
+      @media (max-width: 320px) { @content; }
+    } @else if $screen-size == sm {
+      @media (min-width: 321px) { @content; }
+    }@else if $screen-size == md {
+      @media (min-width: 767px) { @content; }
+    }@else if $screen-size == lg {
+      @media (min-width: 1024px) { @content; }
+    }@else if $screen-size == xl {
+      @media (min-width: 1280px) { @content; }
     }
 }
 

@@ -49,7 +49,9 @@
 }
 .app-header .navbar .app-logo {
   display: flex;
+  justify-content: center;
   align-items: center;
+  flex-direction: row;
 }
 .app-header .navbar .app-logo img {
   width: 100%;
@@ -78,6 +80,11 @@
   text-transform: capitalize;
   font-size: 1rem;
   font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+.app-header .navbar .left-nav-item a:hover,
+.app-header .navbar .right-nav-item a:hover {
+  color: #333233;
 }
 .app-header .navbar .left-nav-item {
   display: flex;
@@ -99,14 +106,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
   border: none;
   width: 100%;
   padding: 1rem 1.5rem;
   margin-top: 0.8rem;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
-.app-header .navbar .right-nav-item .cart-item .add-cart-btn:active {
-  background: rgba(110, 110, 110, 0.5764705882);
+.app-header .navbar .right-nav-item .cart-item .add-cart-btn:active, .app-header .navbar .right-nav-item .cart-item .add-cart-btn:hover {
+  background: rgba(97, 97, 97, 0.5764705882);
 }
 .app-header .navbar .right-nav-item .cart-item .add-cart-btn i {
   color: #c02957;
