@@ -1,5 +1,6 @@
 .product-content{
   display: flex;
+  min-height: 100vh;// for Lighthouse CLS issue fix
   .product-filter{
     background-color: #eaeaea;
     padding: 0.6rem;  
@@ -14,9 +15,9 @@
     
     ul{ 
       li{
-        border-bottom: 1px solid #8d8d8d;
+        border-bottom: 1px solid #363636;
         a{
-          color: #8d8d8d;
+          color: #363636;
           padding: 0.8rem;
           display: block;
         }
@@ -50,7 +51,8 @@
         .product-image{
           img{
             max-width: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            max-height: 15rem;
           }
         }
   
