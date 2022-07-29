@@ -308,6 +308,7 @@
 }
 .product-category .category-item .product-img img {
   max-width: 100%;
+  max-height: 18.75rem;
 }
 .product-category .category-item .product-details {
   flex: 1 1 auto;
