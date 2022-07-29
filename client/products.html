@@ -10,16 +10,20 @@
         
         <title>Sabka Bazaar</title>
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
         <link
         href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet"
+        media="print"
+        onload="this.media='all'"
         />
         <link rel="icon" type="image/png" href="./static/favicon/favicon.ico" />
 
         <!-- font awesome icons -->
-        <link rel="stylesheet" 
+        <link rel="stylesheet" rel="preload"
+        media="print"
+        onload="this.media='all'"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
         <!-- custom style -->
@@ -41,6 +45,7 @@
                                 srcset="./static/images/logo.png 190w,
                                     ./static/images/logo_2x.png 380w "
                                 sizes="(max-width: 600px) 480px, 800px"
+                                width="250" height="240"
                                 src="./static/images/logo.png" alt="Sabka Bazaar Logo" />
                         </a>
                     </div>
@@ -85,7 +90,7 @@
                 <div class="product-filter left-section">
                     <label for="filterType">Select Filter</label>
                     <input id="filterType" type="checkbox" />   
-                    <ul id="categoryContainer" role="navigation" aria-label="Product Filter Menu">
+                    <ul id="categoryContainer" aria-label="Product Filter Menu">
                         <!-- category lis redner here -->
                     </ul>
                 </div>
@@ -156,7 +161,7 @@
                     <div class="product-title">{{name}}</div>
                     <div class="inner-card">
                         <div class="product-image">
-                            <img src="{{imageURL}}" alt="{{name}}" />
+                            <img src="{{imageURL}}" alt="{{name}}" width="250" height="250"/>
                         </div>    
 
                         <div class="product-body">
