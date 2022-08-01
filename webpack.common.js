@@ -1,11 +1,14 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: ['/client/src/js/index.js','/client/src/js/products.js'],
-    plugins: [new HtmlWebpackPlugin({
-        template: "client/index.html"
-    })],
+    plugins: [
+            new HtmlWebpackPlugin({
+                template: "client/index.html"
+            }),
+            new MiniCssExtractPlugin()
+        ],
     module: {
         rules: [
             {
@@ -19,27 +22,31 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                use:[
-                    {
-                        loader: 'style-loader',
-                        loader: 'css-loader'
-                    }
-                ]
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader"]
             },
             { test: /\.handlebars$/, loader: "handlebars-loader" },
             {
+                test: /\.html$/,
+                loader: 'html-srcsets-loader',
+                options: {
+                    attrs: ['img:src', ':srcset'],
+                    minimize: true,
+                    caseSensitive: true,
+                    removeAttributeQuotes:false,
+                    minifyJS:false,
+                    minifyCSS:false
+                },
+            },
+            {
                 test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                  'file-loader',
-                  {
-                    loader: 'image-webpack-loader',
+                use: {
+                    loader: 'file-loader',
                     options: {
-                      bypassOnDebug: true, // webpack@1.x
-                      disable: true, // webpack@2.x and newer
-                    },
-                  },
-                ],
+                        name: "[name].[hash].[ext]",
+                        outputPath: "src/assets"
+                    }
+                },
               }
         ]
     },

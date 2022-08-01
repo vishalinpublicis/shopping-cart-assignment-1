@@ -1,6 +1,7 @@
 // Home page js
 const myRequest = new Request('src/json/categories.json');
 const Handlebars = require("handlebars");
+import '../../scss/styles.css';
 
 fetch(myRequest)
   .then(response => response.json())
