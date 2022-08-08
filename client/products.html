@@ -18,7 +18,7 @@
         media="print"
         onload="this.media='all'"
         />
-        <link rel="icon" type="image/png" href="./static/favicon/favicon.ico" />
+        <link rel="icon" type="image/png" href="./src/images/favicon.ico" />
 
         <!-- font awesome icons -->
         <link rel="stylesheet" rel="preload"
@@ -27,7 +27,7 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
         <!-- custom style -->
-        <link rel="stylesheet" href="./scss/styles.css">
+        <!-- <link rel="stylesheet" href="./scss/styles.css"> -->
     </head>
     <body>
         <!-- loader -->
@@ -40,20 +40,25 @@
             <nav class="navbar">
                 <div class="container">
                     <div class="app-logo">
-                        <a href="index.html" title="Sabka Bazaar">
-                            <img 
-                                srcset="./static/images/logo.png 190w,
-                                    ./static/images/logo_2x.png 380w "
+                        <a href="/" title="Sabka Bazaar">
+                            <picture>
+                                <source srcset="./src/images/logo_2x.png" media="(min-width: 1200px)" />
+                                <source srcset="./src/images/logo.png" media="(min-width: 800px)" />
+                                <img src="./src/images/logo.png" alt="Sabka Bazaar Logo" loading="lazy"/>
+                              </picture>
+                            <!-- <img 
+                                srcset="./src/images/logo.png 190w,
+                                        ./src/images/logo_2x.png 380w "
                                 sizes="(max-width: 600px) 480px, 800px"
                                 width="250" height="240"
-                                src="./static/images/logo.png" alt="Sabka Bazaar Logo" />
+                                src="./src/images/logo.png" alt="Sabka Bazaar Logo" /> -->
                         </a>
                     </div>
                     <!-- left nav items -->
                     <div class="left-nav-item">
                         <ul>
                             <li>
-                                <a href="index.html">home</a>
+                                <a href="/">home</a>
                             </li>
                             <li>
                                 <a href="products.html">products</a>
@@ -127,7 +132,7 @@
                     </div>
                 </div>
                 <div class="popup-disclaimer">
-                    <img src="./static/images/lowest-price.png" alt="Lowest Price Guaranteed logo">
+                    <img src="./src/images/lowest-price.png" alt="Lowest Price Guaranteed logo">
                     <span>You won't find it cheaper anywhere</span>
                 </div>
                 <div class="popup-footer">
@@ -187,7 +192,7 @@
                 <div class="description">No Product Found on this category</div>
             </div>
         </script>
-        <script src="./dist/bundle.js" defer></script>
+        <!-- <script src="./dist/bundle.js" defer></script> -->
 
     </body>
 </html>

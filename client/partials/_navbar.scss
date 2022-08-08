@@ -7,7 +7,7 @@
     .app-logo{
       @include flexCenter;
 
-      img{
+      picture, img{
         width: 100%;
         max-width: 150px;
         height: auto;
@@ -103,6 +103,7 @@
            display: none;
          }
 
+         .app-logo picture,
          .app-logo img{
           max-width: 8rem;
          }

@@ -2,6 +2,8 @@
 const Handlebars = require("handlebars");
 const productJsonRequest = new Request('src/json/products.json');
 const CategoryJsonRequest = new Request('src/json/categories.json');
+import '../json/categories.json';
+import '../json/products.json';
 
 //select element
 const productsEl = document.querySelector(".product-cards");
@@ -256,7 +258,7 @@ function createCategoryHtml(categoryData){
     "name": "All",
     "id": ""
   }
-  newCategoryData = [allCategoryObj, ...categoryData];
+  let newCategoryData = [allCategoryObj, ...categoryData];
   const template = document.getElementById('categoryTemplate');
   if(template)
   var categoryTemplate = template.innerHTML;
